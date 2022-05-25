@@ -110,7 +110,7 @@ npx hardhat removeOrder --contract-addr 0x48720871e91Cc4Df11747CB3b64F58A25E16d1
 
 ```
 
-## How to remove order
+## How to redeem order
 
 ```
 npx hardhat redeemOrder --contract-addr 0x48720871e91Cc4Df11747CB3b64F58A25E16d10c --order-id 0 --eth-amount 0.00001 --network rinkeby

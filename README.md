@@ -11,11 +11,11 @@ This project contains contracts that build up an ecosystem. Project consists of 
 - DAO: `0x2b4fB06736553AA99C0ff3f0892d842529544D62`
 
 ## Rinkeby verifications
-- ItPubToken: `https://rinkeby.etherscan.io/address/0x7b67956bF4Df7d9BfdC4E82c2b59Df4B8bB7408D#code`
-- ACDMToken: `https://rinkeby.etherscan.io/address/0x47DeCac15d7f8453bB86CA51167E093132BF053E#code`
-- ACDMPlatform: `https://rinkeby.etherscan.io/address/0x48720871e91Cc4Df11747CB3b64F58A25E16d10c#code`
-- Staking: `https://rinkeby.etherscan.io/address/0xfD99136A6131704e5ebF947e4A94b32EB36Db424#code`
-- DAO: `https://rinkeby.etherscan.io/address/0x2b4fB06736553AA99C0ff3f0892d842529544D62#code`
+- ItPubToken: https://rinkeby.etherscan.io/address/0x7b67956bF4Df7d9BfdC4E82c2b59Df4B8bB7408D#code
+- ACDMToken: https://rinkeby.etherscan.io/address/0x47DeCac15d7f8453bB86CA51167E093132BF053E#code
+- ACDMPlatform: https://rinkeby.etherscan.io/address/0x48720871e91Cc4Df11747CB3b64F58A25E16d10c#code
+- Staking: https://rinkeby.etherscan.io/address/0xfD99136A6131704e5ebF947e4A94b32EB36Db424#code
+- DAO: https://rinkeby.etherscan.io/address/0x2b4fB06736553AA99C0ff3f0892d842529544D62#code
 
 
 ## How to deploy

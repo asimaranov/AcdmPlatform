@@ -276,8 +276,8 @@ describe("ACDM Platform", function () {
         await network.provider.send("evm_increaseTime", [roundTime + 1]);
         await ACDMPlatform.startTradeRound();
 
-        await ACDMToken.transfer(user1.address, 2);
-        await ACDMToken.connect(user1).approve(ACDMPlatform.address, 2);
+        await ACDMToken.transfer(user1.address, testOrderTokenAmount.mul(2));
+        await ACDMToken.connect(user1).approve(ACDMPlatform.address, testOrderTokenAmount.mul(2));
 
         const addOrderTransaction1 = await ACDMPlatform.addOrder(testOrderTokenAmount, testOrderEthAmount);
         const rc1 = await addOrderTransaction1.wait();

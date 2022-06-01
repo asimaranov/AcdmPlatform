@@ -18,12 +18,9 @@ struct Order {
     uint256 ethPrice;
 }
 
-uint256 constant ACDMS = 10**6;
-
 contract ACDMPlatform {
     address payable public owner;
     DAO public dao;
-    bool public daoInitialized;
     uint256 public roundsNum;
     uint256 public ordersNum;
     uint256 public roundDeadline;
@@ -68,9 +65,10 @@ contract ACDMPlatform {
         _;
     }
 
-    constructor(address acdmTokenAddress, address itPubTokenAddress, uint256 _roundTime) {
+    constructor(address daoAddress, address acdmTokenAddress, address itPubTokenAddress, uint256 _roundTime) {
         token = ACDMToken(acdmTokenAddress);
         itPubToken = ItPubToken(itPubTokenAddress);
+        dao = DAO(daoAddress);
         roundTime = _roundTime;
         owner = payable(msg.sender);
 
@@ -79,14 +77,6 @@ contract ACDMPlatform {
 
         tradeReferrer1RewardPromille = 2_5;
         tradeReferrer2RewardPromille = 2_5;
-    }
-
-    function setDAO(address daoAddress) public {
-        require(msg.sender == owner, "Only owner can do that");
-        require(!daoInitialized, "DAO already initialized");
-
-        dao = DAO(daoAddress);
-        daoInitialized = true;
     }
 
     function register(address payable referrer) public {
@@ -101,8 +91,8 @@ contract ACDMPlatform {
         roundDeadline = block.timestamp + roundTime;
 
         if (roundsNum == 0) {
-            saleSupply = 100_000 * ACDMS;
-            lastPrice = 0.0000100 ether;
+            saleSupply = 100_000_000_000;
+            lastPrice = 10_000_000_000_000;
         }
         else {
             saleSupply = tradeTurnover / lastPrice;

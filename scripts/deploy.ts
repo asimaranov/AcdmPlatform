@@ -15,8 +15,6 @@ async function main() {
 
   const roundTime = 3 * 60 * 60 * 24;
 
-  const ACDMPlatformFactory = await ethers.getContractFactory("ACDMPlatform");
-  const ACDMPlatform = await ACDMPlatformFactory.deploy(ACDMToken.address, ItPubToken.address, roundTime);
 
   let amountEth = ethers.utils.parseEther("0.00001");
   let amountToken = ethers.utils.parseEther("1.0");
@@ -44,8 +42,11 @@ async function main() {
 
   const DAO = await DAOFactory.deploy(Staking.address, chairPerson.address, miminumQuorum, debatingPeriodDuration);
 
+  const ACDMPlatformFactory = await ethers.getContractFactory("ACDMPlatform");
+  const ACDMPlatform = await ACDMPlatformFactory.deploy(DAO.address, ACDMToken.address, ItPubToken.address, roundTime);
+
+
   await Staking.setDAO(DAO.address);
-  await ACDMPlatform.setDAO(DAO.address);
   await ACDMToken.setOwner(ACDMPlatform.address);
   
   console.log(`ItPubToken address: ${ItPubToken.address}, ItPubEthLiquidityToken address: ${lpTokenAddress}, ACDMToken address: ${ACDMToken.address}, Acdm platform address: ${ACDMPlatform.address}, Staking address: ${Staking.address}, DAO address: ${DAO.address}`);

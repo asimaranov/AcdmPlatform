@@ -94,23 +94,22 @@ describe("ACDM Platform", function () {
         const ACDMTokenFactory = await ethers.getContractFactory("ACDMToken");
         ACDMToken = await ACDMTokenFactory.deploy();
 
-        const ACDMPlatformFactory = await ethers.getContractFactory("ACDMPlatform");
-        ACDMPlatform = await (await ACDMPlatformFactory.deploy(ACDMToken.address, ItPubToken.address, roundTime)).connect(user1);
-
-        await ACDMToken.mint(owner.address, parseACDM("500000"));
-        await ACDMToken.setOwner(ACDMPlatform.address);
-
         const StakingFactory = await ethers.getContractFactory("Staking");
         Staking = await (await StakingFactory.deploy(ItPubEthLiqToken.address, ItPubToken.address)).connect(user1);
 
         const DAOFactory = await ethers.getContractFactory("DAO");
         DAO = await DAOFactory.deploy(Staking.address, chairPerson.address, testMinimumQuorum, testDebatingPeriodDuration);
 
+        const ACDMPlatformFactory = await ethers.getContractFactory("ACDMPlatform");
+        ACDMPlatform = await (await ACDMPlatformFactory.deploy(DAO.address, ACDMToken.address, ItPubToken.address, roundTime)).connect(user1);
+
         const AddLiquidityFactory = await ethers.getContractFactory("AddLiquidity");
         AddLiquidity = await AddLiquidityFactory.deploy();
 
         await Staking.connect(owner).setDAO(DAO.address);
-        await ACDMPlatform.connect(owner).setDAO(DAO.address);
+
+        await ACDMToken.mint(owner.address, parseACDM("500000"));
+        await ACDMToken.setOwner(ACDMPlatform.address);
 
         await ItPubEthLiqToken.transfer(user1.address, testUser1Amount);
         await ItPubEthLiqToken.transfer(user2.address, testUser2Amount);
@@ -539,13 +538,5 @@ describe("ACDM Platform", function () {
         await network.provider.send("evm_increaseTime", [roundTime + 1]);
         await ACDMPlatform.startSaleRound();
         expect(await ACDMPlatform.lastPrice()).to.equal(parseEther("0.0000143"));
-    });
-
-    it("Check that only owner can set DAO for ACDM Platform", async () => {
-        await expect(ACDMPlatform.connect(user1).setDAO(DAO.address)).to.be.revertedWith("Only owner can do that");
-    });
-
-    it("Check dao can't be set twice", async () => {
-        await expect(ACDMPlatform.connect(owner).setDAO(DAO.address)).to.be.revertedWith("DAO already initialized");
     });
 });
